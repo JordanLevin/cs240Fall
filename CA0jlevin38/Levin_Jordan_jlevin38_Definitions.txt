@@ -1,0 +1,13 @@
+cd - changes the current working directory to the specified directory.
+ls - lists files in the current directory or the directory given
+    if a directory is given as a parameter
+    -a lists hidden files
+    -l makes a list and gives more info
+    the other options don't really matter
+find - finds a file with a certain name in a certain directory
+    -name is used to specify fle name
+mv - moves a file or folder to a new location
+   -u only moves if the version is newer
+   --backup creates a backup
+more - lets you scroll through a file
+    its not as good as less
