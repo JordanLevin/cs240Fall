@@ -1,6 +1,6 @@
 #
 # Specifiy the target
-all:	Levin_Jordan_jlevin38_Hello
+all: Levin_Jordan_jlevin38_Hello
 
 # Specify the object files that the target depends on
 # Also specify the object files needed to create the executable
