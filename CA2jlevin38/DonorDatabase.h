@@ -1,15 +1,23 @@
+#ifndef DONORDATABASE_H
+#define DONORDATABASE_H
+
+
 #include "Donor.h"
 
 class DonorDatabase{
     private:
-        int size;
         Donor* list;
-        Donor& login();
+        void login();
         void add();
         void save();
         void load();
         void report();
         void quit();
     public:
-        DonorDatabase(int size);
+        int max_size;
+        int current_size;
+        DonorDatabase(int max_size);
+        void commands();
 };
+
+#endif

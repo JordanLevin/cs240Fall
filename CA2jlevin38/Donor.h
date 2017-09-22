@@ -1,3 +1,6 @@
+#ifndef DONOR_H
+#define DONOR_H
+
 #include <string>
 
 class Donor{
@@ -9,22 +12,20 @@ class Donor{
         int street_num;
         std::string street;
         std::string town;
-        enum State state; 
+        //enum State state; 
         std::string zip;
-        float donated;
     public:
+        float donated;
         std::string userid;
+        Donor(bool notdefault);
         Donor();
-        Donor(std::string last, std::string first, int age, int street_num,
-                std::string street, std::string town, std::string zip, float donated);
         void view();
         void total();
-        float get_donated();
-        void donate(float n);
-        void update(std::string last, std::string first, int age, 
-                int street_num, std::string street, std::string town, 
-                std::string zip, float donated);
-        void commands();  
+        void donate();
+        void manage();
+        bool commands();  
         bool operator==(Donor other);
 
 };
+
+#endif

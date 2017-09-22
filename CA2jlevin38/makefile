@@ -1,12 +1,15 @@
 FLAGS = -Wall -Wextra -DDEBUG -g -pedantic -std=c++17
 
-all: donor
+all: Donor
 
-donor: Donor.o CA1.o 
-	g++ $(FLAGS) Donor.o CA1.o -o donor
+Donor: Donor.o DonorDatabase.o CA1.o 
+	g++ $(FLAGS) Donor.o DonorDatabase.o CA1.o -o donor
 
-donor.o: Donor.cpp Donor.h
+Donor.o: Donor.cpp Donor.h
 	g++ $(FLAGS) -c Donor.cpp 
+
+DonorDatabase.o: DonorDatabase.cpp DonorDatabase.h
+	g++ $(FLAGS) -c DonorDatabase.cpp 
 
 CA1.o: CA1.cpp
 	g++ $(FLAGS) -c CA1.cpp

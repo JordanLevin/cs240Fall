@@ -1,10 +1,15 @@
-DonorDatabase::DonorDatabase(int size){
-    list = new Donor[size];
-    this->size = size;
+#include "DonorDatabase.h"
+#include <string>
+#include <iostream>
+
+
+DonorDatabase::DonorDatabase(int max_size){
+    list = new Donor[max_size];
+    this->max_size = max_size;
+    this->current_size = 0;
 }
 
-DonorDatabase::commands(){
-    //std::string input, userid, password, last, first, street, town, zip;
+void DonorDatabase::commands(){
     std::string input;
 
     std::cout << "Enter a command.\n";
@@ -29,26 +34,31 @@ DonorDatabase::commands(){
     else if(input == "Quit"){
         this->quit();
     }
-    else if(){
+    else{
         std::cout << "Invalid Command\n";
     }
 
 }
 
-Donor& DonorDatabase::login(){
+void DonorDatabase::login(){
     bool found_user = false, check_pass = false;
     std::string userid, password;
-    Donor& ret = NULL; 
+    //Donor& ret; 
 
     std::cout << "Please login to continue \n";
     std::cout << "Enter userid \n";
     std::cin >> userid;
     std::cout << "Enter password \n";
     std::cin >> password;
-    for (i = 0; i < this->size; ++i) {
+    for (int i = 0; i < this->max_size; ++i) {
         if(this->list[i].userid == userid){
             found_user = true;
             //TODO check pass
+            bool cont = this->list[i].commands();
+            while(cont){
+                cont = this->list[i].commands();
+            }
+            break;
         } 
     }
     if(!found_user){
@@ -57,30 +67,47 @@ Donor& DonorDatabase::login(){
     else if(!check_pass){
         std::cout << "Error: incorrect password\n";
     }
-    return ret;
+    //return ret;
 }
 
 void DonorDatabase::report(){
     //num of donors in db and total money donated
     int count = 0;
     float money = 0.0f;
-    for(auto const& account : list){
+    for(int i = 0; i < max_size; ++i){
         ++count;
-        money += account.get_donated();
+        money += list[i].donated;
     }
     std::cout << "Donor count: " << count << '\n';
     std::cout << "Total donated" << money << '\n';
 }
 
 void DonorDatabase::add(){
-
+    if(current_size == max_size){
+        std::cout << "Max size already reached\n";
+        return;
+    }
+    Donor d(true);
+    for (int i = 0; i < this->max_size; ++i) {
+        if(this->list[i].userid == d.userid){
+            std::cout << "User id already in use\n";
+            return;
+        }        
+    }
+    list[current_size] = d;
+    current_size++;
 
 }
 
 void DonorDatabase::load(){
+    //do this later
+}
 
+void DonorDatabase::save(){
+    //do this later
 }
 
 void DonorDatabase::quit(){
-
+    //add save to file thing later
+    exit(EXIT_SUCCESS);
 }

@@ -3,127 +3,140 @@
 #include <string>
 #include <iomanip>
 
-Donor::Donor(){
-    this->last = std::string("");
-    this->first = std::string("");
-    this->age = 0;
-    this->street_num = 0;
-    this->street = std::string("");
-    this->town = std::string("");
-    this->zip = std::string("");
-    this->donated = 0.0f;
-}
-Donor::Donor(std::string last, std::string first, int age, int street_num,
-        std::string street, std::string town, std::string zip, float donated){
-    this->last = std::string(last);
-    this->first = std::string(first);
+Donor::Donor(bool notdefault){
+    int age, house;
+    std::string input, userid, password, last, first, street, town, zip;
+    std::cout << "Last Name: ";
+    std::cin >> last;
+    std::cout << "First Name: ";
+    std::cin >> first;
+    std::cout << "Age: ";
+    std::cin >> age;
+    std::cout << "House Number: ";
+    std::cin >> house;
+    std::cout << "Street Name: ";
+    std::cin >> street;
+    std::cout << "Town: ";
+    std::cin >> town;
+    std::cout << "Zip Code: ";
+    std::cin >> zip;
+    std::cout << "User Id: ";
+    std::cin >> userid;
+    std::cout << "Password: ";
+    std::cin >> password;
+    this->last = last;
+    this->first = first;
     this->age = age;
     this->street_num = street_num;
-    this->street = std::string(street);
-    this->town = std::string(town);
-    this->zip = std::string(zip);
-    this->donated = donated;
+    this->street = street;
+    this->town = town;
+    this->zip = zip;
+    this->userid = userid;
+    this->password = password;
+    this->donated = 0.0f;
 }
+
+Donor::Donor(){
+    this->last = "";
+    this->first = "";
+    this->age = 0;
+    this->street_num = 0;
+    this->street = "";
+    this->town = "";
+    this->zip = "";
+    this->userid = "";
+    this->password = "";
+    this->donated = 0.0f;
+}
+
 void Donor::view(){
     std::cout << this->first << " " << this->last << ": Age " << this->age << "\n";
     std::cout << this->street_num << " " << this->street << "\n";
     std::cout << "Town: "<< this->town << ", NY, " << this->zip << "\n";
 }
+
+//Displayed the last name and money donated formatted nicely
 void Donor::total(){
-    std::cout << "$" << std::fixed << std::setprecision(2) << this->donated << "\n";
+    std::cout << last << " $" << std::fixed << std::setprecision(2) << donated << "\n";
 }
-void Donor::donate(float n){
+
+//Requests a value from the user and donates that value
+void Donor::donate(){
+    float n;
+    std::cout << "Enter an amount to donate\n";
+    std::cin >> n;
     this->donated += n;
 }
-void Donor::update(std::string last="", std::string first="", int age=0, 
-        int street_num=0, std::string street="", std::string town="", 
-        std::string zip="", float donated=0.0f){
-    if(last != "")
-        this->last = std::string(last);
-    if(first != "")
-        this->first = std::string(first);
-    if(age != 0)
-        this->age = age;
-    if(street_num != 0)
-        this->street_num = street_num;
-    if(street != "")
-        this->street = std::string(street);
-    if(town != "")
-        this->town = std::string(town);
-    if(zip != "")
-        this->zip = std::string(zip);
-    if(donated != 0.0)
-        this->donated = donated;
+
+//needs work
+void Donor::manage(){
+    int age, house;
+    float donated;
+    std::string input, userid, password, last, first, street, town, zip;
+    std::cout << "Last Name:";
+    std::cin >> last;
+    std::cout << "First Name:";
+    std::cin >> first;
+    std::cout << "Age:";
+    std::cin >> age;
+    std::cout << "House Number:";
+    std::cin >> house;
+    std::cout << "Street Name:";
+    std::cin >> street;
+    std::cout << "Town:";
+    std::cin >> town;
+    std::cout << "Zip Code:";
+    std::cin >> zip;
+    std::cout << "Amount donated";
+    std::cin >> donated;
+    this->last = last;
+    this->first = first;
+    this->age = age;
+    this->street_num = street_num;
+    this->street = street;
+    this->town = town;
+    this->zip = zip;
+    this->donated = donated;
+}
+
+bool Donor::passwd(){
 
 }
 
-float Donor::get_donated(){
-    return this->donated;
-}
-        
-bool Donor::operator==(const Donor& other){
-    return this->userid == other.userid;
-}
+bool Donor::commands(){
+    std::string input;
 
-void Donor::commands(){
     std::cout << "Enter a command.\n";
     std::cout << 
-        "Choose from [\"Add\" \"Manage\" \"View\" \"Donate\" \"Total\" \"Quit\"]\n";
-    std::cout << ":";
+        "Choose from [\"Manage\" \"Passwd\" \"View\" \"Donate\" \"Total\" \"Logout\"]\n";
     std::cin >> input;
-    std::cout << "\n";
-    if(input == "Add"){
-        std::cout << "Last Name:";
-        std::cin >> last;
-        std::cout << "First Name:";
-        std::cin >> first;
-        std::cout << "Age:";
-        std::cin >> age;
-        std::cout << "House Number:";
-        std::cin >> house;
-        std::cout << "Street Name:";
-        std::cin >> street;
-        std::cout << "Town:";
-        std::cin >> town;
-        std::cout << "Zip Code:";
-        std::cin >> zip;
-        this->update(last, first, age, house, street, town, zip, 0.0f);
-    }
-    else if(input == "View"){
+    if(input == "View"){
         this->view();
         std::cout << "Total amount donated: ";
         this->total();
+        return true;
     }
     else if(input == "Manage"){
-        std::cout << "Last Name:";
-        std::cin >> last;
-        std::cout << "First Name:";
-        std::cin >> first;
-        std::cout << "Age:";
-        std::cin >> age;
-        std::cout << "House Number:";
-        std::cin >> house;
-        std::cout << "Street Name:";
-        std::cin >> street;
-        std::cout << "Town:";
-        std::cin >> town;
-        std::cout << "Zip Code:";
-        std::cin >> zip;
-        this->update(last, first, age, house, street, town, zip, 0.0f);
+        this->manage();
+        return true;
     }
     else if(input == "Donate"){
-        float value;
-        std::cout << "Enter a value to donate\n";
-        std::cin >> value;
-        this->donate(value);
+        this->donate();
+        return true;
     }
     else if(input == "Total"){
         this->total();
+        return true;
     }
-    else if(input == "Quit"){
-        return 0;
+    else if(input == "Passwd"){
+        this->passwd();
+        return true;
+    }
+    else if(input == "Logout"){
+        return false;
     }
     else{
         std::cout << "Invalid Command\n";
+        return true;
     }
 }

@@ -1,11 +1,12 @@
 #include "Donor.h"
+#include "DonorDatabase.h"
 #include <string>
 #include <iostream>
-#include <vector>
 
 int main(int argc, char *argv[]){
     
-    DonorDatabase db(stoi(argv[1]));
+    DonorDatabase db(std::stoi(argv[1]));
+    std::cerr << "TEST";
     Donor d;
     
     std::string input;
