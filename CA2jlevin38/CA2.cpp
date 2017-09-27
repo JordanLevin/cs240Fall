@@ -6,7 +6,10 @@
 int main(int argc, char *argv[]){
     
     DonorDatabase db(std::stoi(argv[1]));
-    std::cerr << "TEST";
+    //a file was passed in
+    if(argc == 3){
+        db.load(argv[2]);
+    }
     Donor d;
     
     std::string input;
@@ -15,9 +18,6 @@ int main(int argc, char *argv[]){
     bool login = false;
     std::string userid, password;
     
-    //donor info for add and manage
-    std::string last, first, street, town, zip;
-    int age, house;
     while(true){
         if(login){
             if(d.commands())

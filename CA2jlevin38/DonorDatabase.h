@@ -1,7 +1,7 @@
 #ifndef DONORDATABASE_H
 #define DONORDATABASE_H
 
-
+#include <string>
 #include "Donor.h"
 
 class DonorDatabase{
@@ -10,7 +10,6 @@ class DonorDatabase{
         void login();
         void add();
         void save();
-        void load();
         void report();
         void quit();
     public:
@@ -18,6 +17,7 @@ class DonorDatabase{
         int current_size;
         DonorDatabase(int max_size);
         void commands();
+        void load(std::string file_name);
 };
 
 #endif
