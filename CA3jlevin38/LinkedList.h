@@ -31,29 +31,11 @@ class LinkedList{
         std::shared_ptr<Node<T>> head;
         int size = 0;
         
-        class Iterator {
-            private:
-                std::shared_ptr<Node<T>> current;
-            public:
-                Iterator(std::shared_ptr<Node<T>> init){
-                    current = init;
-                }
-                bool operator!=(const LinkedList<T>::Iterator& rhs){
-                    return this->current != rhs->current;
-                }
-                LinkedList<T>::Iterator& operator++(){
-                    current = current->next;
-                    return this->current = this->current->next;
-                }
-                Node<T>& operator*(){
-                    return current->value;
-                }
-        };
 
     public:
         LinkedList() = default;
         LinkedList(T val){
-            head = std::make_shared<Node<T>>();
+            head = std::make_shared<Node<T>>(val);
             size = 1;
         }
         LinkedList(const LinkedList<T>& original){
@@ -86,6 +68,28 @@ class LinkedList{
             }
             std::cout << "\n";
         }
+        
+        class Iterator {
+            private:
+                std::shared_ptr<Node<T>> current;
+            public:
+                Iterator(std::shared_ptr<Node<T>> init){
+                    current = init;
+                }
+                bool operator!=(const LinkedList<T>::Iterator& rhs){
+                    return this->current != rhs.current;
+                }
+                LinkedList<T>::Iterator& operator++(){
+                    current = current->next;
+                    this->current = this->current->next;
+                }
+                T& operator*(){
+                    return current->value;
+                }
+                const T& operator*() const{
+                    return current->value;
+                }
+        };
         
         LinkedList<T>::Iterator begin(){
             return LinkedList<T>::Iterator(head);

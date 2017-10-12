@@ -33,7 +33,7 @@ int menu_two(FBLUser& user){
     else if(words[0] == "LOGOUT"){
         return 0;
     }
-
+    return -1;
 }
 
 
@@ -59,25 +59,26 @@ int menu_top(LinkedList<FBLUser>& users){
     }
     else if(words[0] == "LOGIN"){
         std::string id = words[1];
-        FBLUser& user = (*users.begin()).value;
-        for(user: users){
+        LinkedList<FBLUser>::Iterator user = users.begin();
+        for(auto user: users){
             if(user.userid == id){
                 break;
             }
         }
         //check login
-        int cont = menu_two(user);
+        int cont = menu_two(*user);
         while(cont){
-            cont = menu_top(user);
+            cont = menu_two(*user);
         }
         return 1;
     }
     else if(words[0] == "QUIT"){
         return 0;
     }
+    return -1;
 }
 
-int main(int argc, char *argv[]){
+int main(){
     LinkedList<FBLUser> users; 
     int cont = menu_top(users);
     while(cont != 0){
