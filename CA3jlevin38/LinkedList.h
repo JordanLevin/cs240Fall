@@ -30,7 +30,6 @@ class LinkedList{
     private:
         std::shared_ptr<Node<T>> head;
         int size = 0;
-        
 
     public:
         LinkedList() = default;
@@ -40,11 +39,13 @@ class LinkedList{
         }
         LinkedList(const LinkedList<T>& original){
             size = original.size;
+            head = original.head;
         }
         void append(T val){
             auto current = head;
             if(current == nullptr){
                 head = std::make_shared<Node<T>>(val);
+                ++size;
                 return;
             }
             while(current->next != nullptr){
@@ -57,6 +58,7 @@ class LinkedList{
         T pop_front(){
             T ret = head->value;
             head = head->next;
+            --size;
             return ret;
         }
 
@@ -71,36 +73,38 @@ class LinkedList{
         
         class Iterator {
             private:
-                std::shared_ptr<Node<T>> current;
+                Node<T>* current;
             public:
-                Iterator(std::shared_ptr<Node<T>> init){
-                    current = init;
-                }
+                Iterator(Node<T>* init): 
+                    current(init){}
                 bool operator!=(const LinkedList<T>::Iterator& rhs){
-                    return this->current != rhs.current;
+                    return current != rhs.current;
                 }
-                LinkedList<T>::Iterator& operator++(){
-                    current = current->next;
-                    this->current = this->current->next;
+                bool operator==(const LinkedList<T>::Iterator& rhs){
+                    return current == rhs.current;
+                }
+                void operator++(){
+                    current = (current->next).get();
                 }
                 T& operator*(){
-                    return current->value;
-                }
-                const T& operator*() const{
                     return current->value;
                 }
         };
         
         LinkedList<T>::Iterator begin(){
-            return LinkedList<T>::Iterator(head);
+            return LinkedList<T>::Iterator(head.get());
         }
 
         LinkedList<T>::Iterator end(){
-            auto current = head;
-            while(current->next != nullptr){
-                current = current->next;
+            auto current = head.get();
+            while(current != nullptr){
+                current = (current->next).get();
             }
             return LinkedList<T>::Iterator(current);
+        }
+
+        bool empty(){
+            return size == 0;
         }
 
 
