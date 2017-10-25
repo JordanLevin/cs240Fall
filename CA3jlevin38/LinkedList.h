@@ -56,6 +56,9 @@ class LinkedList{
         }
 
         T pop_front(){
+            if(head == nullptr){
+                std::cout << "Error: popped from empty list\n";
+            }
             T ret = head->value;
             head = head->next;
             --size;

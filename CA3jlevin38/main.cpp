@@ -23,7 +23,7 @@ int menu_two(FBLUser& user, LinkedList<FBLUser>& users){
             std::back_inserter(words));
     if(words[0] == "READ"){
         if(user.feed.empty()){
-            std::cout << "ERROR: post list empty\n";
+            std::cout << "ERROR: feed empty\n";
             return -1;
         }
         std::cout << user.feed.pop_front().text << '\n';
