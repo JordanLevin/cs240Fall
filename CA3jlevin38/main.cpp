@@ -9,6 +9,17 @@
 #include "LinkedList.h"
 
 
+int menu_three(FBLUser& user, FBLPost& post){
+    std::string input;
+    std::cout << "Enter a command: LIKE, COMMENT, READ_AZ, READ_ZA, DONE\n";
+    std::getline(std::cin, input);
+
+    std::istringstream iss(input);
+    std::vector<std::string> words;
+    std::copy(std::istream_iterator<std::string>(iss),
+            std::istream_iterator<std::string>(),
+            std::back_inserter(words));
+}
 
 int menu_two(FBLUser& user, LinkedList<FBLUser>& users){
     std::string input;
@@ -26,7 +37,10 @@ int menu_two(FBLUser& user, LinkedList<FBLUser>& users){
             std::cout << "ERROR: feed empty\n";
             return -1;
         }
-        std::cout << user.feed.pop_front().text << '\n';
+        //this wont work????????
+        FBLPost post = user.feed.pop_front();
+        std::cout << post.text << '\n';
+        while(menu_three(user, post))
         return 2;
     }
     else if(words[0] == "POST"){
