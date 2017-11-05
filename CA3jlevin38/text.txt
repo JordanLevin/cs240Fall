@@ -1,0 +1,11 @@
+CREATE a a a a
+CREATE b b b b
+LOGIN a a
+FRIEND b
+POST test from a
+POST another test
+LOGOUT
+LOGIN b b
+MYFEED
+READ
+DONE

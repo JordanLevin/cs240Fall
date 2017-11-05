@@ -12,6 +12,7 @@ class Node{
         //give linked list access to node internals
         friend class LinkedList<T2>;
         std::shared_ptr<Node<T2>> next;
+        std::shared_ptr<Node<T2>> prev; //doubly linked
     public:
         T2 value;
         Node() = default;
@@ -21,6 +22,7 @@ class Node{
         Node(const Node<T2>& original){
             value = original.value;
             next = original.next;
+            prev = original.prev; //doubly linked
         }
         ~Node() = default;
 };
@@ -29,9 +31,8 @@ template<class T>
 class LinkedList{
     private:
         std::shared_ptr<Node<T>> head;
-        int size = 0;
-
     public:
+        int size = 0;
         LinkedList() = default;
         LinkedList(T val){
             head = std::make_shared<Node<T>>(val);
@@ -52,15 +53,20 @@ class LinkedList{
                 current = current->next;
             }
             current->next = std::make_shared<Node<T>>(val);
+            current->next->prev = current; //doubly linked
             ++size;
         }
 
-        T pop_front(){
+        std::shared_ptr<T> pop_front(){
             if(head == nullptr){
                 std::cout << "Error: popped from empty list\n";
+                return nullptr;
             }
-            T ret = head->value;
+            auto ret = std::make_shared<T>(head->value);
             head = head->next;
+            if(head != nullptr){
+                head->prev = nullptr; //doubly linked
+            }
             --size;
             return ret;
         }

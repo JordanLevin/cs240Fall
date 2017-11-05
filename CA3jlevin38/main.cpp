@@ -19,6 +19,33 @@ int menu_three(FBLUser& user, FBLPost& post){
     std::copy(std::istream_iterator<std::string>(iss),
             std::istream_iterator<std::string>(),
             std::back_inserter(words));
+    if(words[0] == "LIKE"){
+        (*(post.original))++;
+        std::cout << *(post.original) << '\n';
+        return 1;
+    }
+    else if(words[0] == "COMMENT"){
+        post.comments.append(FBLComment(input.substr(8,input.length()),
+            user.first, user.last));
+        return 1;
+    }
+    else if(words[0] == "READ_AZ"){
+        for(auto c: post.comments){
+            std::cout << c.text << "\nPosted by " << c.first << " " << c.last << "\n";
+        }
+        return 1;
+    }
+    else if(words[0] == "READ_ZA"){
+
+        return 1;
+    }
+    else if(words[0] == "DONE"){
+        return 0;
+    }
+    else{
+        std::cout << "Bad command\n";
+        return -1;
+    }
 }
 
 int menu_two(FBLUser& user, LinkedList<FBLUser>& users){
@@ -33,14 +60,18 @@ int menu_two(FBLUser& user, LinkedList<FBLUser>& users){
             std::istream_iterator<std::string>(),
             std::back_inserter(words));
     if(words[0] == "READ"){
+        //std::cout << "Size: " << user.feed.size << '\n';
         if(user.feed.empty()){
             std::cout << "ERROR: feed empty\n";
             return -1;
         }
-        //this wont work????????
-        FBLPost post = user.feed.pop_front();
+        //auto temp = user.feed.pop_front();
+        //if(temp == nullptr){}
+        auto post_ptr = user.feed.pop_front();
+        //std::cout << post_ptr << '\n';
+        FBLPost& post = *(post_ptr);
         std::cout << post.text << '\n';
-        while(menu_three(user, post))
+        while(menu_three(user, post)){}
         return 2;
     }
     else if(words[0] == "POST"){
@@ -49,11 +80,8 @@ int menu_two(FBLUser& user, LinkedList<FBLUser>& users){
         user.add_post(post);
         for(auto& u: user.friends){
             u->feed.append(post);
+            std::cout << '\n' << u->feed.size << '\n';
         }
-        //ill one line it later using std::transform
-        //std::transform(user.friends.begin(), user.friends.end(),
-                //user.friends.begin(), [&](){
-                //}) 
         return 1;
     }
     else if(words[0] == "LOGOUT"){
@@ -77,22 +105,25 @@ int menu_two(FBLUser& user, LinkedList<FBLUser>& users){
         }
     }
     else if(words[0] == "MYFEED"){
-        for(const auto p: user.feed){
+        for(const auto& p: user.feed){
             std::cout << p.text << '\n';
         }
     }
     else if(words[0] == "MYWALL"){
-        for(const auto p: user.wall){
-            std::cout << p.text << '\n';
+        for(const auto& p: user.wall){
+            std::cout << "Likes: " << p.likes << " " << p.text << '\n';
         }
     }
-    return -1;
+    else{
+        std::cout << "Bad command\n";
+        return -1;
+    }
 }
 
 
 int menu_top(LinkedList<FBLUser>& users){
     std::string input;
-    std::cout << "Enter a command: CREATE, LOGIN, QUIT\n";
+    std::cout << "Enter a command: CREATE, LOGIN, QUIT, USERS, SORTUSERS\n";
     std::getline(std::cin, input);
 
     //do some string stream magic to split by white space
@@ -136,6 +167,17 @@ int menu_top(LinkedList<FBLUser>& users){
             return -1;
         }
         while(menu_two(*u, users)){}
+        return 1;
+    }
+    else if(words[0] == "USERS"){
+        for(auto& user: users){
+            std::cout << user.last << ", " << user.first << " <" << user.userid << ">\n";
+        }
+        //do the thing
+        return 1;
+    }
+    else if(words[0] == "SORTUSERS"){
+        //do the thing
         return 1;
     }
     else if(words[0] == "QUIT"){

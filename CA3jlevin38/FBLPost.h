@@ -2,15 +2,20 @@
 #define FBLPOST_H
 
 #include <string>
+#include "FBLComment.h"
+#include "LinkedList.h"
 
 class FBLPost{
-    private:
-
     public:
+        int likes;
+        int* original;
         std::string text;
-        FBLPost() = default;
+        LinkedList<FBLComment> comments;
+        FBLPost();
+        //FBLPost() = default;
         FBLPost(std::string t);
-        FBLPost(const FBLPost& other) = default;
+        //FBLPost(const FBLPost& other) = default;
+        FBLPost(const FBLPost& other);
 
         ~FBLPost() = default;
 };
