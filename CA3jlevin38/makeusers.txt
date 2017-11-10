@@ -1,0 +1,6 @@
+CREATE g g g g
+CREATE d d d d
+CREATE a a a a
+CREATE z z z z
+CREATE o o o o
+CREATE c c c c

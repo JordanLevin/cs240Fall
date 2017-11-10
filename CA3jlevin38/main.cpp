@@ -21,7 +21,6 @@ int menu_three(FBLUser& user, FBLPost& post){
             std::back_inserter(words));
     if(words[0] == "LIKE"){
         (*(post.original))++;
-        std::cout << *(post.original) << '\n';
         return 1;
     }
     else if(words[0] == "COMMENT"){
@@ -36,7 +35,13 @@ int menu_three(FBLUser& user, FBLPost& post){
         return 1;
     }
     else if(words[0] == "READ_ZA"){
-
+        std::vector<FBLComment> temp;
+        for(auto c: post.comments){
+            temp.push_back(c);
+        }
+        for(auto c = temp.rbegin(); c != temp.rend(); c++){
+            std::cout << c->text << "\nPosted by " << c->first << " " << c->last << "\n";
+        }
         return 1;
     }
     else if(words[0] == "DONE"){
@@ -111,7 +116,8 @@ int menu_two(FBLUser& user, LinkedList<FBLUser>& users){
     }
     else if(words[0] == "MYWALL"){
         for(const auto& p: user.wall){
-            std::cout << "Likes: " << p.likes << " " << p.text << '\n';
+            //std::cout << "Likes: " << p.likes << " " << p.text << '\n';
+            std::cout << "Likes: " << *(p.original) << " " << p.text << '\n';
         }
     }
     else{
@@ -178,6 +184,7 @@ int menu_top(LinkedList<FBLUser>& users){
     }
     else if(words[0] == "SORTUSERS"){
         //do the thing
+        users.sort();
         return 1;
     }
     else if(words[0] == "QUIT"){

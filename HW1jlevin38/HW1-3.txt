@@ -1,0 +1,9 @@
+tail call optimization is when you design your code in a way that the
+compiler can optimize the code to use the same stack frame.
+
+This is done when you dont do any extra operations in the recursive call
+ex:
+no tail call optimization here
+return recurse(n-1) + 5
+tail call optimization here
+return recurse(n-1, accumulator)

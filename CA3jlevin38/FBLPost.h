@@ -2,13 +2,14 @@
 #define FBLPOST_H
 
 #include <string>
+#include <memory>
 #include "FBLComment.h"
 #include "LinkedList.h"
 
 class FBLPost{
     public:
         int likes;
-        int* original;
+        std::shared_ptr<int> original;
         std::string text;
         LinkedList<FBLComment> comments;
         FBLPost();

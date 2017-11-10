@@ -42,6 +42,77 @@ class LinkedList{
             size = original.size;
             head = original.head;
         }
+        void sort(){
+            bool fix_head = false;
+            auto largest = head; /* Find highest address in list */
+            auto sorted = head; /* Node for which list is sorted until */
+            std::shared_ptr<Node<T>> ret = nullptr;
+            std::shared_ptr<Node<T>> t1, t2; /* for random misc temp node stuff */
+            while(!this->is_sorted()){
+                //std::cout << "Sorting\n";
+                /* find largest and save its address, next, and prev */
+                largest = this->find_max(sorted);
+                if(largest->next == nullptr && sorted == largest)
+                    break;
+                if(!fix_head){
+                    head = largest;
+                    fix_head = true;
+                }
+                t1 = largest->prev;
+                t2 = largest->next;
+
+                if(sorted->next == largest){
+                    largest->next = sorted;
+                    largest->prev = sorted->prev;
+                    if(largest->prev)
+                        largest->prev->next = largest;
+                    sorted->prev = largest;
+                    sorted->next = t2;
+                    continue;
+                }
+
+                /* put node 'largest' into list where sorted was */
+                largest->prev = sorted->prev;
+                largest->next = sorted->next;
+                if(largest->next)
+                    largest->next->prev = largest;
+                if(largest->prev)
+                    largest->prev->next = largest;
+
+                /* put node 'sorted' back into list where largest was */
+                if(t1)
+                    t1->next = sorted;
+                if(t2)
+                    t2->prev = sorted;
+                sorted->prev = t1;
+                sorted->next = t2;
+
+                sorted = largest->next;
+
+            }
+        }
+        
+        std::shared_ptr<Node<T>> find_max(std::shared_ptr<Node<T>> start){
+            std::shared_ptr<Node<T>> largest = start; /* Find highest address in list */
+            std::shared_ptr<Node<T>> curr = start;
+            while(curr){
+                if(curr->value.last < largest->value.last)
+                    largest = curr;
+                curr = curr->next;
+            }
+            return largest;
+        }
+
+        bool is_sorted(){
+            auto curr = head;
+            while(curr){
+                if(curr->next->value.last >= curr->value.last)
+                    return false;
+                curr = curr->next;
+            }
+            return true;
+        }
+
         void append(T val){
             auto current = head;
             if(current == nullptr){

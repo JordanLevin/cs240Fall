@@ -1,11 +1,25 @@
+CREATE w w w w
+CREATE t t t t
+CREATE z z z z
 CREATE a a a a
-CREATE b b b b
+CREATE c c c c
+CREATE g g g g
+USERS
 LOGIN a a
-FRIEND b
-POST test from a
-POST another test
+FRIEND t
+FRIEND z
+FRIEND c
 LOGOUT
-LOGIN b b
-MYFEED
-READ
-DONE
+LOGIN c c
+FRIEND w
+FRIEND g
+FRIEND t
+POST post from c
+POST another post from c
+POST hey its a post from c
+LOGOUT
+LOGIN a a
+POST yo its a post from a
+POST hey from a
+LOGOUT
+
